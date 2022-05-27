@@ -35,8 +35,10 @@ def show_plot(measurement_data):
 
         plt.plot(x_axis, exp_func, c="#609bd6")
         ax.scatter(x_axis, y_axis, marker="o")
-        plt.text(max(x_axis) - 1, max(y_axis) - 1, rf"$f(x)={round(trendline[1], 4)} e^{ {round(trendline[0], 4)} }$",
-                 ha="left", va="bottom")
+        plt.text(max(x_axis)*0.9, max(y_axis)*0.9, rf"$f(x)={round(trendline[1], 4)} e^{ {round(trendline[0], 4)} }$"
+                                                   "\n"
+                                                   rf"$\mu={round(trendline[0]*-1, 4)}$",
+                 ha="right", va="bottom")
 
         plt.show()
     except TypeError:
