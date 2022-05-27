@@ -5,31 +5,42 @@ import numpy as np
 welcome_msg = "#" * 50 + "\nLinear Attenuation Coefficient Calculation, Visualisation and Analysis Tool.\n" + "#" * 50
 measurements = []
 
+test_measurements = [(0, 10), (1, 5), (2, 2.5), (3, 1.25)]
+
 
 def generate_axes(ms_data):
-    x_ax = y_ax = []
+    x_ax = []
+    y_ax = []
     for dp in ms_data:
         x, y = dp
         x_ax.append(x)
         y_ax.append(y)
 
-    return x_ax, y_ax
+    return np.array(x_ax), np.array(y_ax)
 
 
 def show_plot(measurement_data):
-    plt.style.use('_mpl-gallery')
-    x_axes, y_axes = generate_axes(measurement_data)
+    x_axis, y_axis = generate_axes(measurement_data)
 
     fig, ax = plt.subplots()
 
     plt.xlabel("x [cm]")
     plt.ylabel("N [imp/min]")
+    ax.set_xlabel("x [cm]")
+    ax.set_ylabel("N [imp/min]")
 
-    #ax.set_xlabel("x [cm]")
-    #ax.set_ylabel("N [imp/min]")
+    try:
+        trendline = np.polyfit(x_axis, np.log(y_axis), 1)
+        exp_func = np.exp(trendline[1]) * np.exp(trendline[0] * x_axis)
 
-    ax.scatter(x_axes, y_axes)
-    plt.show()
+        plt.plot(x_axis, exp_func, c="#609bd6")
+        ax.scatter(x_axis, y_axis, marker="o")
+        plt.text(max(x_axis) - 1, max(y_axis) - 1, rf"$f(x)={round(trendline[1], 4)} e^{ {round(trendline[0], 4)} }$",
+                 ha="left", va="bottom")
+
+        plt.show()
+    except TypeError:
+        print("Invalid Input.", "\n")
 
 
 def measurements_input():
