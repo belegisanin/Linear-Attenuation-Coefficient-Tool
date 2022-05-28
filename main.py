@@ -5,8 +5,6 @@ import numpy as np
 welcome_msg = "#" * 50 + "\nLinear Attenuation Coefficient Calculation, Visualisation and Analysis Tool.\n" + "#" * 50
 measurements = []
 
-test_measurements = [(0, 10), (1, 5), (2, 2.5), (3, 1.25)]
-
 
 def generate_axes(ms_data):
     x_ax = []
